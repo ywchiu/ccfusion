@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ccfusion.dev/schemas/input-validation.schema.json",
+  "title": "Input Validation",
+  "description": "Pre-gate validation result for the primary input artifact. Runs before any panel call.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision", "validated_artifact", "rationale"],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "REWRITE_PRIMARY_ARTIFACT_REQUIRED",
+        "BLOCKED_NEEDS_HUMAN"
+      ],
+      "description": "The validator may emit only these three decisions."
+    },
+    "validated_artifact": {
+      "type": "string",
+      "description": "Path to the primary artifact under review, e.g. input/context-pack.md."
+    },
+    "missing_or_invalid_fields": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "findings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rewrite_instructions": {
+      "type": "string",
+      "description": "Required content only when decision is REWRITE_PRIMARY_ARTIFACT_REQUIRED."
+    },
+    "primary_artifact_rewrite_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_primary_artifact_rewrites": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 2
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "decision": { "const": "REWRITE_PRIMARY_ARTIFACT_REQUIRED" } }
+      },
+      "then": { "required": ["rewrite_instructions"] }
+    }
+  ]
+}

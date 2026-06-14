@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ccfusion.dev/schemas/plan-judge.schema.json",
+  "title": "Plan Judge",
+  "description": "Synthesized Plan Gate decision using most-severe-wins precedence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision", "rationale"],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": [
+        "APPROVE_PLAN",
+        "REVISE_PLAN",
+        "NEEDS_MORE_RESEARCH",
+        "BLOCKED_NEEDS_HUMAN"
+      ]
+    },
+    "consensus": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Must be resolved here or escalated."
+    },
+    "accepted_findings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rejected_findings": {
+      "type": "array",
+      "description": "Each rejection must include a reason.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["finding", "reason"],
+        "properties": {
+          "finding": { "type": "string" },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "required_plan_changes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "research_gaps": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "final_assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "test_expectations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rollback_considerations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "remaining_risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

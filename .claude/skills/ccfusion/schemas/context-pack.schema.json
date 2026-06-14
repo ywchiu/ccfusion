@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ccfusion.dev/schemas/context-pack.schema.json",
+  "title": "Context Pack",
+  "description": "Primary input artifact for the Plan Gate. Must pass pre-gate validation before any panel call.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_summary",
+    "acceptance_criteria",
+    "known_constraints",
+    "external_freshness_needed"
+  ],
+  "properties": {
+    "task_summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What the user wants changed and why."
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Objectively checkable outcomes that prove the task is done."
+    },
+    "known_constraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Hard constraints: stable APIs, perf budgets, compatibility, deadlines."
+    },
+    "repo_context": {
+      "type": "string",
+      "description": "Repo slug, stack, entry points, build/test commands."
+    },
+    "files_in_scope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "out_of_scope": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "external_freshness_needed": {
+      "type": "boolean",
+      "description": "True if the task depends on current external facts (docs, advisories, breaking changes)."
+    }
+  }
+}

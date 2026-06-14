@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ccfusion.dev/schemas/reviewer-output.schema.json",
+  "title": "Reviewer Output",
+  "description": "Read-only Claude subagent reviewer output. Cannot emit REWRITE_PRIMARY_ARTIFACT_REQUIRED.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reviewer_role", "key_findings", "recommendation", "confidence"],
+  "properties": {
+    "reviewer_role": {
+      "type": "string",
+      "enum": [
+        "architecture-reviewer",
+        "test-reviewer",
+        "security-reviewer",
+        "domain-reviewer"
+      ]
+    },
+    "files_inspected": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "key_findings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "blocking_risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "non_blocking_risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "missing_tests": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recommended_plan_changes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": [
+        "APPROVE_PLAN",
+        "REVISE_PLAN",
+        "NEEDS_MORE_RESEARCH",
+        "BLOCKED_NEEDS_HUMAN"
+      ]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"]
+    }
+  }
+}

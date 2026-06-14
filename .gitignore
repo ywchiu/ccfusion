@@ -1,0 +1,12 @@
+# ccfusion runtime audit output — generated per run against the gated repo.
+# Never committed in the skill repo; runs are ephemeral, repo-specific evidence.
+.fusion/
+
+# Local dogfood / test scaffold — not part of the shipped skill.
+# (The worked runs in .claude/skills/ccfusion/examples/ document the flow instead.)
+/sandbox/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
