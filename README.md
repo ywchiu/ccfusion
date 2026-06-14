@@ -4,40 +4,40 @@
 
 > Inspired by [OpenRouter Fusion](https://openrouter.ai/).
 
-**Fuse a panel of AI reviewers into one vetted plan — before a single line of code is written.**
+**A panel of AIs reviewing your plan beats one model charging in on its first guess — yes, even a top model like Fable 5.**
 
-OpenRouter Fusion blends several models into one better answer. `ccfusion` brings
-that idea to coding: instead of letting an AI edit your repo on its first guess, it
-sends your change through a panel of independent AI critics — Claude read-only
-subagents (architecture / tests / security), a Codex adversarial review, and
-optional Gemini research — and a **Plan Judge** fuses their verdicts
-(most-severe-wins) into an approved plan. Only then does a **single writer**
-implement. It doesn't promise the result is correct; it makes the plan much harder
-to get wrong, and leaves a trail showing why.
+There's a Chinese saying: three humble cobblers outsmart the lone genius. `ccfusion`
+runs on that idea — the same spirit as OpenRouter Fusion, which combines several
+models into one better answer. Instead of letting one AI dive in and edit your code
+on a hunch, it first puts the plan in front of a panel of AIs: one checks the
+architecture, one the tests, one security, Codex plays devil's advocate, and Gemini
+looks things up when current facts matter. A "judge" weighs every opinion and only
+signs off once the serious problems are resolved. **Only then does a single AI
+actually write the code.**
 
-> Plan first. Review in parallel. Execute with one writer.
+It won't promise the code is perfect. It just makes a dumb plan far less likely —
+and shows you exactly how the plan got decided.
+
+> Plan first. Let many review. Let one write.
 
 ```text
-Many agents may inspect and critique.
-Only Claude Code main session may execute.
+Many AIs may inspect and critique.
+Only one — the Claude Code main session — may write.
 ```
 
-### Why use it
+### Why bother
 
-- **Catch the bad plan before it costs you** — flawed approaches surface from
-  several independent lenses *before* any file is touched, not after you've burned
-  an implementation cycle.
-- **Many minds, one hand** — agents critique in parallel; only the Claude Code main
-  session may execute. No parallel writers, no surprise edits.
-- **Auditable by construction** — every run leaves a complete, never-overwritten
-  trail of how the plan was reached (manifests, reviews, judge decisions, the
-  approved plan).
-- **Bounded and safe** — every loop is capped and escalates to a human; secrets
-  never leave (manifest-gated external calls); destructive commands are blocked.
+- **Kill a bad plan early.** Problems get caught before a single file is touched —
+  not after you've wasted an hour building the wrong thing.
+- **Many reviewers, one writer.** Lots of AIs can poke holes; only one is ever
+  allowed to touch your files. No surprise edits.
+- **You can see the receipts.** Every run leaves a full, never-rewritten record of
+  how the plan was reached.
+- **It can't run away.** Every retry loop has a hard limit and stops for a human;
+  secrets never get sent out; dangerous commands are blocked.
 
-**Status: v0.1.0 (frozen).** Intentionally narrow: exactly one preset (`plan-gate`)
-under exactly one execution profile (`strict-single-writer`). Not a general fusion
-framework, not a preset router, not a multi-agent runtime.
+**Status: v0.1.0.** On purpose, it does exactly one thing: vet a coding plan before
+anyone writes code. Nothing fancier yet.
 
 ---
 
@@ -120,35 +120,6 @@ There is intentionally **no `presets/` directory** in v0.1.
   summary is sent instead. See `SECURITY.md`.
 - Destructive commands and unscoped `git stash` are forbidden without explicit
   approval.
-
-## Roadmap (NOT implemented in v0.1)
-
-These are future directions only. **They do not exist yet** — no directories,
-presets, or code for them are present in this repository, and `ccfusion` will not
-behave as if they do.
-
-```text
-v0.2 Review Gate
-  post-implementation Codex review; P0/P1/P2 classification; repair loop;
-  add-tests loop; mid-implementation re-plan with path-scoped partial-patch
-  preservation; review-gate total attempt backstop;
-  dedicated candidate-plan artifact directory (separate from approved-plan/) so
-  the candidate vs approved distinction is structural, not just by attempt number
-
-v0.3 Research Fusion
-  independent research preset; multi-source comparison; source quality scoring
-
-v0.4 Decision Fusion
-  cost / risk / time tradeoff panel; option comparison; decision memo
-
-v0.5 Patch Fusion
-  isolated git worktree execution; multiple candidate patches; test-based selection
-```
-
-**Roadmap rule:** do not create a preset directory before implementing the
-preset. The general *Normalize → Panel → Judge → Decision* kernel, if it proves
-real, is extracted only after Plan Gate and Review Gate have both run on real
-repositories.
 
 ## Design sentence
 
