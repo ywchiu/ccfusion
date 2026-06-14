@@ -1,5 +1,9 @@
 # Controlled Coding Fusion Skill (`ccfusion`)
 
+**English** | [繁體中文](README.zh-TW.md)
+
+> Inspired by [OpenRouter Fusion](https://openrouter.ai/).
+
 A Claude Code Skill for safer AI-assisted coding **planning**.
 
 > Plan first. Review in parallel. Execute with one writer.
