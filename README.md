@@ -4,7 +4,16 @@
 
 > Inspired by [OpenRouter Fusion](https://openrouter.ai/).
 
-A Claude Code Skill for safer AI-assisted coding **planning**.
+**Fuse a panel of AI reviewers into one vetted plan — before a single line of code is written.**
+
+OpenRouter Fusion blends several models into one better answer. `ccfusion` brings
+that idea to coding: instead of letting an AI edit your repo on its first guess, it
+sends your change through a panel of independent AI critics — Claude read-only
+subagents (architecture / tests / security), a Codex adversarial review, and
+optional Gemini research — and a **Plan Judge** fuses their verdicts
+(most-severe-wins) into an approved plan. Only then does a **single writer**
+implement. It doesn't promise the result is correct; it makes the plan much harder
+to get wrong, and leaves a trail showing why.
 
 > Plan first. Review in parallel. Execute with one writer.
 
@@ -13,14 +22,22 @@ Many agents may inspect and critique.
 Only Claude Code main session may execute.
 ```
 
-`ccfusion` raises planning quality **before any file is touched** and leaves an
-auditable trail of how the plan was reached. It does **not** guarantee
-correctness — it gates the plan, then lets a single writer implement.
+### Why use it
 
-**Status: v0.1.0 (frozen).** Intentionally narrow: exactly one preset
-(`plan-gate`) under exactly one execution profile (`strict-single-writer`). It is
-not a general fusion framework, not a router of presets, and not a multi-agent
-runtime.
+- **Catch the bad plan before it costs you** — flawed approaches surface from
+  several independent lenses *before* any file is touched, not after you've burned
+  an implementation cycle.
+- **Many minds, one hand** — agents critique in parallel; only the Claude Code main
+  session may execute. No parallel writers, no surprise edits.
+- **Auditable by construction** — every run leaves a complete, never-overwritten
+  trail of how the plan was reached (manifests, reviews, judge decisions, the
+  approved plan).
+- **Bounded and safe** — every loop is capped and escalates to a human; secrets
+  never leave (manifest-gated external calls); destructive commands are blocked.
+
+**Status: v0.1.0 (frozen).** Intentionally narrow: exactly one preset (`plan-gate`)
+under exactly one execution profile (`strict-single-writer`). Not a general fusion
+framework, not a preset router, not a multi-agent runtime.
 
 ---
 
